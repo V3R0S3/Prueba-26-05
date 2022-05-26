@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Goku v/s Cell</title>
+</head>
+
+<body>
+    <style type="text/css">
+        #world {
+            background-image: url("namek.jpg");
+            width: 900px;
+            height: 700px;
+        }
+
+        .player {
+            position: absolute;
+            background-image: url("goku.png");
+            width: 70px;
+            height: 75px;
+        }
+
+        .enemy {
+            position: absolute;
+            background-image: url("minicell.png");
+            width: 70px;
+            height: 75px;
+        }
+
+        .gokudown {
+            position: relative;
+            background-image: url("gokudown.png");
+            width: 70px;
+            height: 75px;
+        }
+
+        .gokuup {
+            position: absolute;
+            background-image: url("gokuup.png");
+            width: 70px;
+            height: 75px;
+        }
+
+        .gokuright {
+            position: absolute;
+            background-image: url("gokuright.png");
+            width: 70px;
+            height: 75px;
+        }
+
+        .gokuleft {
+            position: absolute;
+            background-image: url("gokuleft.png");
+            width: 70px;
+            height: 75px;
+        }
+
+        .missileGK {
+            position: absolute;
+            background-image: url("kamehameha.gif");
+            width: 70px;
+            height: 100px;
+        }
+
+        .missileMC {
+            position: absolute;
+            background-image: url("disparominicell.png");
+            width: 70px;
+            height: 100px;
+        }
+        .CuadrovidaGK{
+            background-image: url("cuadrovidagoku.png");
+            width: 70px;
+            height: 100px;
+            position:absolute;
+        }
+        .vidaGK{
+            background-image: url("barravidagoku.png") ;
+            width: 70px;
+            height: 100px;
+            position: absolute;
+        }
+        .CuadrovidaMC{
+            background-image: url("cuadrovidaminicell.png");
+            width: 70px;
+            height: 100px;
+            position: absolute;
+        }
+        .vidaMC{
+            background-image: url("barravidaminicell.png");
+        }
+    </style>
+
+    <div id="world">
+        <div id="players">
+            <div class="player"> </div>
+        </div>
+        <div id="enemies"></div>
+            <div class="enemy"> </div>
+        <div id="missilesGK">
+            <div class="misilesGK"></div> 
+        </div>
+        <div id="missilesMC"
+         </div>
+        <div id="gokudown"></div>
+        <div id="gokuup"></div>
+        <div id="gokuleft"></div>
+        <div id="gokurigth"></div>
+    </div>
+
+    <script type="text/javascript">
+        var player = {
+            left: 450,
+            top: 700
+        }
+
+        var enemies = [
+            { left: 350, top: 200 },
+            { left: 450, top: 250 },
+            { left: 550, top: 200 },
+            { left: 250, top: 250 },
+            { left: 650, top: 250 },
+            { left: 150, top: 200 },
+        ]
+
+        var missiles = []
+
+        function drawPlayer() {
+            content = "<div class='player' style='left: " + player.left + "px; top: " + player.top + "px'></div>";
+            document.getElementById("players").innerHTML = content;
+        }
+
+        function drawEnemies() {
+            content = "";
+            for (var i = 0; i < enemies.length; i++) {
+                content += "<div class='enemy' style='left: " + enemies[i].left + "px; top: " + enemies[i].top + "px'></div>";
+            }
+            document.getElementById("enemies").innerHTML = content;
+        }
+
+        var leftValue = 450, topValue = 100, direction = 'down', step = 1;
+
+
+
+        document.onkeydown = function (e) {
+            if (e.keyCode == 37) {
+                if (player.left > 0) {
+                    player.left -= 10;
+                }
+            }
+            if (e.keyCode == 39) {
+                if (player.left < 1180) {
+                    player.left += 10;
+                }
+            }
+            if (e.keyCode == 38) {
+                if (player.top > 570) {
+                    player.top -= 10;
+                }
+            }
+            if (e.keyCode == 40) {
+                if (player.top < 760) {
+                    player.top += 10;
+                }
+            }
+            if (e.keyCode == 32) {
+                missiles.push({ left: player.left + 51, top: player.top });
+                drawMissiles();
+            }
+            drawPlayer();
+        }
+
+        function gameLoop() {
+            moveEnemies();
+            moveMissiles();
+            drawPlayer();
+            drawEnemies();
+            drawMissiles();
+            setTimeout(gameLoop, 50);
+        }
+
+        gameLoop();
+    </script>
+</body>
+
+</html>
